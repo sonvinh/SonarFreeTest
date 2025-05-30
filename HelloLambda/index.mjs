@@ -2,7 +2,8 @@ import { DynamoDBClient, ScanCommand, GetItemCommand, PutItemCommand, UpdateItem
 const ddbClient = new DynamoDBClient({ region: "ap-northeast-1" });
 
 export const handler = async (event, context, callback) => {
-
+    const superA :  string = 'superA'
+    const superB :  string = 'superB'
     // Mở Cloudwatch log lên để kiểm tra log
     console.log("Xuat log vao cloudwatch");
 
