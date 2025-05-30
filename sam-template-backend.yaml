@@ -1,0 +1,53 @@
+##########################################################################
+#   BUILD COMMANDS:
+#   sam build --cached --template sam-template-backend.yaml 
+#
+#   DEPLOY COMMANDS:
+#
+#   Example:
+#     DEV:   sam deploy --guided --config-file samconfig-dev.toml
+##########################################################################
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless App for backend
+
+
+#region Parameters
+Parameters:
+  ##########################################################################
+  #    Product parameter
+  ##########################################################################
+  Product:
+    Description: Setting project ID for consistency naming resources, descriptions, tags...
+    Type: String
+    Default: ccv-traning-aws
+    AllowedValues:
+      - ccv-traning-aws
+
+  ##########################################################################
+  #    Env parameter
+  ##########################################################################
+  Env:
+    Description: Setting Env for consistency naming resources, descriptions, tags...
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+
+#region Resources
+Resources:
+  #region Lambda
+  ##########################################################################
+  #   Lambda function used for AWS Lambda training
+  ##########################################################################
+  CCVTraningHelloLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${Env}-${Product}-api
+      AutoPublishAlias: live
+      Handler: index.handler
+      Runtime: nodejs18.x
+      CodeUri: ./HelloLambda/
+      MemorySize: 128
+      Timeout: 180
